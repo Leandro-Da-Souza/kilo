@@ -9,11 +9,9 @@
 #define CTRL_KEY(k) ((k) & 0x1f)
 
 /*** data ***/
-
 struct termios orig_termios;
 
 /*** terminal ***/
-
 void die(const char *s) {
   perror(s);
   exit(1);
@@ -54,7 +52,6 @@ char editorReadKey() {
 }
 
 /*** input ***/
-
 void editorProcessKeypress() {
   char c = editorReadKey();
 
@@ -66,7 +63,6 @@ void editorProcessKeypress() {
 }
 
 /*** init ***/
-
 int main() {
   enableRawMode();
 
