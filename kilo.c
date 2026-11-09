@@ -8,6 +8,8 @@
 /*** defines ***/
 #define CTRL_KEY(k) ((k) & 0x1f)
 
+/*** data ***/
+
 struct termios orig_termios;
 
 /*** terminal ***/
@@ -51,6 +53,8 @@ char editorReadKey() {
   return c;
 }
 
+/*** input ***/
+
 void editorProcessKeypress() {
   char c = editorReadKey();
 
@@ -60,6 +64,8 @@ void editorProcessKeypress() {
     break;
   }
 }
+
+/*** init ***/
 
 int main() {
   enableRawMode();
