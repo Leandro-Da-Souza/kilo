@@ -12,12 +12,7 @@
 #define CTRL_KEY(k) ((k) & 0x1f)
 #define KILO_VERSION "0.0.1"
 
-enum editorKey {
-  ARROW_LEFT = 'a',
-  ARROW_RIGHT = 'b',
-  ARROW_UP = 'w',
-  ARROW_DOWN = 's'
-};
+enum editorKey { ARROW_LEFT = 1000, ARROW_RIGHT, ARROW_UP, ARROW_DOWN };
 
 /*** data ***/
 struct editorConfig {
@@ -61,7 +56,7 @@ void enableRawMode() {
     die("tcsetattr");
 }
 
-char editorReadKey() {
+int editorReadKey() {
   int nread;
   char c;
 
@@ -202,24 +197,32 @@ void editorRefreshScreen() {
 }
 
 /*** input ***/
-void editorMoveCursor(char key) {
+void editorMoveCursor(int key) {
   switch (key) {
   case ARROW_LEFT:
-    E.cx--;
+    if (E.cx != 0) {
+      E.cx--;
+    }
     break;
   case ARROW_RIGHT:
-    E.cx++;
+    if (E.cx != E.screencols - 1) {
+      E.cx++;
+    }
     break;
   case ARROW_UP:
-    E.cy--;
+    if (E.cy != 0) {
+      E.cy--;
+    }
     break;
   case ARROW_DOWN:
-    E.cy++;
+    if (E.cy != E.screenrows - 1) {
+      E.cy++;
+    }
     break;
   }
 }
 void editorProcessKeypress() {
-  char c = editorReadKey();
+  int c = editorReadKey();
 
   switch (c) {
   case CTRL_KEY('q'):
