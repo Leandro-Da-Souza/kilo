@@ -12,6 +12,13 @@
 #define CTRL_KEY(k) ((k) & 0x1f)
 #define KILO_VERSION "0.0.1"
 
+enum editorKey {
+  ARROW_LEFT = 'a',
+  ARROW_RIGHT = 'b',
+  ARROW_UP = 'w',
+  ARROW_DOWN = 's'
+};
+
 /*** data ***/
 struct editorConfig {
   int cx, cy;
@@ -73,13 +80,13 @@ char editorReadKey() {
     if (seq[0] == '[') {
       switch (seq[1]) {
       case 'A':
-        return 'w';
+        return ARROW_UP;
       case 'B':
-        return 's';
+        return ARROW_DOWN;
       case 'C':
-        return 'd';
+        return ARROW_RIGHT;
       case 'D':
-        return 'a';
+        return ARROW_LEFT;
       }
     }
 
@@ -197,16 +204,16 @@ void editorRefreshScreen() {
 /*** input ***/
 void editorMoveCursor(char key) {
   switch (key) {
-  case 'a':
+  case ARROW_LEFT:
     E.cx--;
     break;
-  case 'd':
+  case ARROW_RIGHT:
     E.cx++;
     break;
-  case 'w':
+  case ARROW_UP:
     E.cy--;
     break;
-  case 's':
+  case ARROW_DOWN:
     E.cy++;
     break;
   }
@@ -221,10 +228,10 @@ void editorProcessKeypress() {
 
     exit(0);
     break;
-  case 'w':
-  case 's':
-  case 'a':
-  case 'd':
+  case ARROW_UP:
+  case ARROW_DOWN:
+  case ARROW_LEFT:
+  case ARROW_RIGHT:
     editorMoveCursor(c);
     break;
   }
